@@ -1,1 +1,1 @@
-Device configuration for the ASUS ZenFone 5 a500cg
+Device configuration for the ASUS ZenFone 6 a600cg
