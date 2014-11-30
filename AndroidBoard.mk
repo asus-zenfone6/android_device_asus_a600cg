@@ -8,4 +8,4 @@ ALL_PREBUILT += $(INSTALLED_KERNEL_TARGET)
 include $(TOP)/dalvik/vm/compiler/codegen/x86/libenc/Android.mk
 
 # include the non-open-source counterpart to this file
--include vendor/asus/a500cg/AndroidBoardVendor.mk
+-include vendor/asus/a600cg/AndroidBoardVendor.mk

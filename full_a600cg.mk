@@ -1,4 +1,5 @@
-# Copyright (C) 2010 The Android Open Source Project
+#
+# Copyright 2013 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,19 +12,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-ifneq ($(filter a600cg, $(TARGET_DEVICE)),)
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
-LOCAL_PATH := $(call my-dir)
+PRODUCT_NAME := full_a600cg
+PRODUCT_DEVICE := a600cg
+PRODUCT_BRAND := Android
+PRODUCT_MODEL := AOSP on a600cg
+PRODUCT_MANUFACTURER := asus
 
-include $(CLEAR_VARS)
-
-include $(call all-makefiles-under,$(LOCAL_PATH))
-
-# include x86 encoder (apache-harmony (intel))
-include $(TOP)/dalvik/vm/compiler/codegen/x86/libenc/Android.mk
-
-# include the non-open-source counterpart to this file
--include vendor/asus/a600cg/AndroidBoardVendor.mk
-
-endif
+$(call inherit-product, device/asus/a600cg/device.mk)
+$(call inherit-product-if-exists, vendor/asus/a600cg/a600cg-vendor.mk)

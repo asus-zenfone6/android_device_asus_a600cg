@@ -27,10 +27,10 @@ cmdline_extra := watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxx
 BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=logk0 earlyprintk=nologger loglevel=0 kmemleak=off androidboot.bootmedia=sdcard androidboot.hardware=redhookbay $(cmdline_extra) ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on vmalloc=172M androidboot.wakesrc=05 androidboot.mode=main
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/asus/a500cg/ramdisk/recovery.fstab
+TARGET_RECOVERY_FSTAB := device/asus/a600cg/ramdisk/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
-TARGET_RECOVERY_INITRC := device/asus/a500cg/ramdisk/recovery.init.redhookbay.rc
-TARGET_PREBUILT_RECOVERY_KERNEL := device/asus/a500cg/blobs/kernel-ww-2.20.40.13
+TARGET_RECOVERY_INITRC := device/asus/a600cg/ramdisk/recovery.init.redhookbay.rc
+TARGET_PREBUILT_RECOVERY_KERNEL := device/asus/a600cg/blobs/kernel-ww-2.20.40.13
 RECOVERY_SDCARD_ON_DATA := true
 DEVICE_RESOLUTION := 720x1280
 
@@ -57,7 +57,7 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 
 # HW_Renderer
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/asus/a500cg/configs/egl.cfg
+BOARD_EGL_CFG := device/asus/a600cg/configs/egl.cfg
 BOARD_ALLOW_EGL_HIBERNATION := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
@@ -74,7 +74,7 @@ BOARD_USES_ALSA_AUDIO := true
 
 # SELinux
 HAVE_SELINUX := true
-BOARD_SEPOLICY_DIRS += device/asus/a500cg/sepolicy
+BOARD_SEPOLICY_DIRS += device/asus/a600cg/sepolicy
 BOARD_SEPOLICY_UNION += \
     file_contexts \
     seapp_contexts \
