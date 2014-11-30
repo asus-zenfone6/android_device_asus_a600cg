@@ -1,7 +1,6 @@
-#adding Ecompass Daemon added by Eve_Wen change layout from 8 to 1(SR) 20131127
-service akmd  /system/bin/akmd09911 -m 1
+# adding Ecompass Daemon added by Eve_Wen change layout from 8 to 2(SR_a600cg) 20131204
+service akmd  /system/bin/akmd09911 -m 2
     class core
     user system
     group system misc input
     oneshot
-

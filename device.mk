@@ -17,7 +17,7 @@
 LOCAL_PATH := device/asus/a600cg
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/blobs/kernel-ww-2.20.40.13
+	LOCAL_KERNEL := $(LOCAL_PATH)/blobs/a600cg-kernel-ww-2.20.40.11
 else
 	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
@@ -29,8 +29,8 @@ endif
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-DEVICE_BASE_BOOT_IMAGE := $(LOCAL_PATH)/blobs/boot-ww-2.20.40.13.img
-DEVICE_BASE_RECOVERY_IMAGE := $(LOCAL_PATH)/blobs/recovery-ww-2.20.40.13.img
+DEVICE_BASE_BOOT_IMAGE := $(LOCAL_PATH)/blobs/a600cg-boot-ww-2.20.40.11.img
+DEVICE_BASE_RECOVERY_IMAGE := $(LOCAL_PATH)/blobs/a600cg-recovery-ww-2.20.40.11.img
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/intel-boot-tools/boot.mk
 
 PRODUCT_COPY_FILES += \
@@ -38,41 +38,51 @@ PRODUCT_COPY_FILES += \
 
 # Ramdisk fstab / rc files
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/ramdisk/init.watchdog.rc:root/init.watchdog.rc \
     $(LOCAL_PATH)/ramdisk/fstab.charger.redhookbay:root/fstab.charger.redhookbay \
     $(LOCAL_PATH)/ramdisk/fstab.ramconsole.redhookbay:root/fstab.ramconsole.redhookbay \
     $(LOCAL_PATH)/ramdisk/fstab.redhookbay:root/fstab.redhookbay \
+    $(LOCAL_PATH)/ramdisk/init.asusreset.rc:root/init.asusreset.rc \
     $(LOCAL_PATH)/ramdisk/init.avc.rc:root/init.avc.rc \
     $(LOCAL_PATH)/ramdisk/init.bt.rc:root/init.bt.rc \
+    $(LOCAL_PATH)/ramdisk/init.bt.vendor.rc:root/init.bt.vendor.rc \
+    $(LOCAL_PATH)/ramdisk/init.common.rc:root/init.common.rc \
     $(LOCAL_PATH)/ramdisk/init.compass.rc:root/init.compass.rc \
     $(LOCAL_PATH)/ramdisk/init.debug.rc:root/init.debug.rc \
     $(LOCAL_PATH)/ramdisk/init.diag.rc:root/init.diag.rc \
-    $(LOCAL_PATH)/ramdisk/init.logtool.rc:root/init.logtool.rc \
-    $(LOCAL_PATH)/ramdisk/init.partlink.rc:root/init.partlink.rc \
     $(LOCAL_PATH)/ramdisk/init.environ.rc:root/init.environ.rc \
-    $(LOCAL_PATH)/ramdisk/init.bt.vendor.rc:root/init.bt.vendor.rc \
-    $(LOCAL_PATH)/ramdisk/init.common.rc:root/init.common.rc \
     $(LOCAL_PATH)/ramdisk/init.gps.rc:root/init.gps.rc \
+    $(LOCAL_PATH)/ramdisk/init.logtool.rc:root/init.logtool.rc \
     $(LOCAL_PATH)/ramdisk/init.modem.rc:root/init.modem.rc \
+    $(LOCAL_PATH)/ramdisk/init.partlink.rc:root/init.partlink.rc \
     $(LOCAL_PATH)/ramdisk/init.platform.usb.rc:root/init.platform.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
     $(LOCAL_PATH)/ramdisk/init.redhookbay.rc:root/init.redhookbay.rc \
+    $(LOCAL_PATH)/ramdisk/init.trace.rc:root/init.trace.rc \
+    $(LOCAL_PATH)/ramdisk/init.usb.rc:root/init.usb.rc \
+    $(LOCAL_PATH)/ramdisk/init.watchdog.rc:root/init.watchdog.rc \
     $(LOCAL_PATH)/ramdisk/init.wifi.rc:root/init.wifi.rc \
     $(LOCAL_PATH)/ramdisk/init.wifi.vendor.rc:root/init.wifi.vendor.rc \
     $(LOCAL_PATH)/ramdisk/init.wireless.rc:root/init.wireless.rc \
     $(LOCAL_PATH)/ramdisk/props.board.rc:root/props.board.rc \
     $(LOCAL_PATH)/ramdisk/props.platform.rc:root/props.platform.rc \
     $(LOCAL_PATH)/ramdisk/props.rc:root/props.rc \
+    $(LOCAL_PATH)/ramdisk/recovery.init.redhookbay.rc:root/recovery.init.redhookbay.rc \
     $(LOCAL_PATH)/ramdisk/rfkill_bt.sh:root/rfkill_bt.sh \
     $(LOCAL_PATH)/ramdisk/ueventd.modules.blacklist:root/ueventd.modules.blacklist \
+    $(LOCAL_PATH)/ramdisk/ueventd.rc:root/ueventd.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.redhookbay.rc:root/ueventd.redhookbay.rc
+
 
 # Intel blobs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/charger:root/charger \
     $(LOCAL_PATH)/ramdisk/upi_ug31xx:root/upi_ug31xx \
-    $(LOCAL_PATH)/ramdisk/ia_watchdogd:root/usr/bin/ia_watchdogd \
-    $(LOCAL_PATH)/ramdisk/sbin/partlink:root/sbin/partlink
+    $(LOCAL_PATH)/ramdisk/usr/bin/ia_watchdogd:root/usr/bin/ia_watchdogd \
+    $(LOCAL_PATH)/ramdisk/sbin/partlink:root/sbin/partlink \
+    $(LOCAL_PATH)/ramdisk/sbin/healthd:root/sbin/healthd \
+    $(LOCAL_PATH)/ramdisk/sbin/modprobe:root/sbin/modprobe \
+    $(LOCAL_PATH)/ramdisk/sbin/ueventd:root/sbin/ueventd \
+    $(LOCAL_PATH)/ramdisk/sbin/watchdogd:root/sbin/watchdogd 
 
 # Binary to be replaced with source code ..
 PRODUCT_COPY_FILES += \
@@ -83,45 +93,43 @@ PRODUCT_COPY_FILES += \
 # Modules (currently from ASUS)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/lib/modules/apwr3_1.ko:root/lib/modules/apwr3_1.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/pax.ko:root/lib/modules/pax.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/sep3_10.ko:root/lib/modules/sep3_10.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/vtsspp.ko:root/lib/modules/vtsspp.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/atomisp-css2300.ko:root/lib/modules/atomisp-css2300.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/bcm43362.ko:root/lib/modules/bcm43362.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/bcm_bt_lpm.ko:root/lib/modules/bcm_bt_lpm.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/cfg80211.ko:root/lib/modules/cfg80211.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/hdmi_audio.ko:root/lib/modules/hdmi_audio.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/hm2056.ko:root/lib/modules/hm2056.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/imx111.ko:root/lib/modules/imx111.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/imx219.ko:root/lib/modules/imx219.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/kxtj9.ko:root/lib/modules/kxtj9.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/mac80211.ko:root/lib/modules/mac80211.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.alias:root/lib/modules/modules.alias \
+    $(LOCAL_PATH)/ramdisk/lib/modules/mn34130.ko:root/lib/modules/mn34130.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/modules.alias.bin:root/lib/modules/modules.alias.bin \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.dep:root/lib/modules/modules.dep \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.dep.bin:root/lib/modules/modules.dep.bin \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.symbols:root/lib/modules/modules.symbols \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.symbols.bin:root/lib/modules/modules.symbols.bin \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.isapnpmap:root/lib/modules/modules.isapnpmap \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.softdep:root/lib/modules/modules.softdep \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.devname:root/lib/modules/modules.devname \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.ofmap:root/lib/modules/modules.ofmap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.alias:root/lib/modules/modules.alias \
     $(LOCAL_PATH)/ramdisk/lib/modules/modules.ccwmap:root/lib/modules/modules.ccwmap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.dep.bin:root/lib/modules/modules.dep.bin \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.dep:root/lib/modules/modules.dep \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.devname:root/lib/modules/modules.devname \
     $(LOCAL_PATH)/ramdisk/lib/modules/modules.ieee1394map:root/lib/modules/modules.ieee1394map \
-    $(LOCAL_PATH)/ramdisk/lib/modules/modules.pcimap:root/lib/modules/modules.pcimap \
     $(LOCAL_PATH)/ramdisk/lib/modules/modules.inputmap:root/lib/modules/modules.inputmap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.isapnpmap:root/lib/modules/modules.isapnpmap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.ofmap:root/lib/modules/modules.ofmap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.pcimap:root/lib/modules/modules.pcimap \
     $(LOCAL_PATH)/ramdisk/lib/modules/modules.seriomap:root/lib/modules/modules.seriomap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.softdep:root/lib/modules/modules.softdep \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.symbols.bin:root/lib/modules/modules.symbols.bin \
+    $(LOCAL_PATH)/ramdisk/lib/modules/modules.symbols:root/lib/modules/modules.symbols \
     $(LOCAL_PATH)/ramdisk/lib/modules/modules.usbmap:root/lib/modules/modules.usbmap \
+    $(LOCAL_PATH)/ramdisk/lib/modules/pax.ko:root/lib/modules/pax.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/pnwdisp.ko:root/lib/modules/pnwdisp.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/pvrsgx.ko:root/lib/modules/pvrsgx.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/rmi4.ko:root/lib/modules/rmi4.ko \
-    $(LOCAL_PATH)/ramdisk/lib/modules/rt8515.ko:root/lib/modules/rt8515.ko\
+    $(LOCAL_PATH)/ramdisk/lib/modules/sep3_10.ko:root/lib/modules/sep3_10.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/st_drv.ko:root/lib/modules/st_drv.ko \
+    $(LOCAL_PATH)/ramdisk/lib/modules/t4k37.ko:root/lib/modules/t4k37.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/test_nx.ko:root/lib/modules/test_nx.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/videobuf-core.ko:root/lib/modules/videobuf-core.ko \
     $(LOCAL_PATH)/ramdisk/lib/modules/videobuf-vmalloc.ko:root/lib/modules/videobuf-vmalloc.ko \
+    $(LOCAL_PATH)/ramdisk/lib/modules/vtsspp.ko:root/lib/modules/vtsspp.ko \
     $(LOCAL_PATH)/ramdisk/lib/prebuild_modules/texfat.ko:root/lib/prebuild_modules/texfat.ko \
-    $(LOCAL_PATH)/ramdisk/lib/prebuild_modules/tntfs.ko:root/lib/prebuild_modules/tntfs.ko
+    $(LOCAL_PATH)/ramdisk/lib/prebuild_modules/tntfs.ko:root/lib/prebuild_modules/tntfs.ko 
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -248,8 +256,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=320 \
-    panel.physicalWidthmm=54 \
-    panel.physicalHeightmm=95 \
+    panel.physicalWidthmm=74 \
+    panel.physicalHeightmm=131 \
     ro.opengles.version=131072 \
     gsm.net.interface=rmnet0 \
     persist.system.at-proxy.mode=0

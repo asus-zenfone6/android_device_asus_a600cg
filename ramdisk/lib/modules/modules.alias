@@ -1,4 +1,6 @@
 # Aliases extracted from modules themselves.
+alias i2c:mn34130 mn34130
+alias i2c:t4k37 t4k37
 alias platform:bcm43xx bcm_bt_lpm
 alias pci:v00008086d000008D0sv*sd*bc*sc*i* atomisp_css2300
 alias pci:v00008086d0000014Fsv*sd*bc*sc*i* atomisp_css2300
@@ -9,7 +11,6 @@ alias pci:v00008086d0000014Bsv*sd*bc*sc*i* atomisp_css2300
 alias pci:v00008086d0000014Asv*sd*bc*sc*i* atomisp_css2300
 alias pci:v00008086d00000149sv*sd*bc*sc*i* atomisp_css2300
 alias pci:v00008086d00000148sv*sd*bc*sc*i* atomisp_css2300
-alias i2c:imx111 imx111
 alias i2c:hm2056 hm2056
 alias pci:v00008086d000008C8sv*sd*bc03sc00i* pnwdisp
 alias pci:v00008086d000008C7sv*sd*bc03sc00i* pnwdisp
@@ -27,9 +28,6 @@ alias i2c:syn_3400_igzo rmi4
 alias i2c:syn_3400_cgs rmi4
 alias i2c:synaptics_3402 rmi4
 alias i2c:synaptics_3202 rmi4
-alias i2c:imx219 imx219
-alias i2c:rt8515 rt8515
-alias i2c:kxtj9 kxtj9
 alias of:N*T*Candroid,bcmdhd_wlan* bcm43362
 alias sdio:c*v02D0dA962* bcm43362
 alias sdio:c*v02D0d4335* bcm43362

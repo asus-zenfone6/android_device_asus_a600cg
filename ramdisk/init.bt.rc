@@ -35,3 +35,11 @@ service bd_prov /system/bin/bd_prov
 service bdt /system/bin/bdt s
     disable 40
     oneshot 41
+
+service BrcmService /system/bin/BrcmService.sh
+    disable
+    oneshot
+
+service BrcmChmod /system/bin/BrcmChmod.sh
+    disable
+    oneshot 

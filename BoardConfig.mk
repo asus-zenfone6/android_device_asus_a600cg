@@ -30,7 +30,7 @@ BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=logk0 earlyprintk=nologge
 TARGET_RECOVERY_FSTAB := device/asus/a600cg/ramdisk/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 TARGET_RECOVERY_INITRC := device/asus/a600cg/ramdisk/recovery.init.redhookbay.rc
-TARGET_PREBUILT_RECOVERY_KERNEL := device/asus/a600cg/blobs/kernel-ww-2.20.40.13
+TARGET_PREBUILT_RECOVERY_KERNEL := device/asus/a600cg/blobs/a600cg-kernel-ww-2.20.40.11
 RECOVERY_SDCARD_ON_DATA := true
 DEVICE_RESOLUTION := 720x1280
 
@@ -46,7 +46,7 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER := NL80211
-WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/bcmdhd/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/bcm43362/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP    := "/system/etc/firmware/fw_bcmdhd_43362_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA   := "/system/etc/firmware/fw_bcmdhd_43362.bin"
 WIFI_DRIVER_MODULE_ARG := "iface_name=wlan0 firmware_path=/system/etc/firmware/fw_bcmdhd_43362.bin"

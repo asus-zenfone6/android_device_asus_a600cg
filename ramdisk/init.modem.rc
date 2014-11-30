@@ -80,9 +80,9 @@ service RILD1_DSDS /system/bin/rild -l /system/lib/librapid-ril-core.so -- -a /d
     group radio cache inet misc audio
     disabled
 
-service RILD2_DSDS /system/bin/rild -l /system/lib/librapid-ril-core.so -S rild2 -- -a /dev/gsmtty24 -n /dev/gsmtty25 -m /dev/gsmtty26 -c /dev/gsmtty27 -u /dev/gsmtty23 -o /dev/gsmtty35 -d /dev/gsmtty29 -d /dev/gsmtty30 -d /dev/gsmtty31 -i 1
+service RILD2_DSDS /system/bin/rild -l /system/lib/librapid-ril-core.so -S rild2 -D rild-debug2 -- -a /dev/gsmtty24 -n /dev/gsmtty25 -m /dev/gsmtty26 -c /dev/gsmtty27 -u /dev/gsmtty23 -o /dev/gsmtty35 -d /dev/gsmtty29 -d /dev/gsmtty30 -d /dev/gsmtty31 -i 1
     socket rild2 stream 660 root radio
-    socket rild-debug stream 660 radio system
+    socket rild-debug2 stream 660 radio system
     class main
     user root
     group radio cache inet misc audio

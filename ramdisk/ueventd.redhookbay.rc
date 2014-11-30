@@ -2,8 +2,8 @@
 /dev/matrix                             0640   root       diag
 
 # modem tty node change to radio user can read and write
-/dev/gsmtty*                            0660   root       radio
-/dev/ttyMFD*                            0660   root       radio
+/dev/gsmtty*                            0660   radio      system
+/dev/ttyMFD*                            0660   radio      system
 
 # Audience device to audio group
 /dev/audience_es305                     0770   audio      audio
@@ -66,11 +66,3 @@ uevent:sdio:c*v037Ad*   setprop wlan.driver.vendor mtk
 uevent:sdio:c*v0089d*   setprop wlan.driver.vendor intel
 # realtek
 uevent:sdio:c*v024Cd*	setprop wlan.driver.vendor rtl
-
-/dev/ttyACM*              0660   root       radio
-/dev/ttyPTI1              0660   root       radio
-/dev/ttyGS0               0660   root       radio
-/dev/mdmTrace             0660   root       radio
-/dev/mdm_ctrl             0660   root       radio
-/dev/ttyIFX0              0660   root       radio
-/dev/ttyIFX1              0660   root       radio

@@ -42,6 +42,8 @@ on init
     setprop_from_sysfs /sys/kernel/fw_update/fw_info/scu_version sys.scu.version
     setprop_from_sysfs /sys/kernel/fw_update/fw_info/valhooks_version sys.valhooks.version
 
+    mkdir /ADF 0775 system system
+    mkdir /APD 0775 system system
 
 on boot
 #  Mount debugfs for systrace settings
@@ -438,6 +440,13 @@ on post-fs
     #--- chown for mpu sensor ---#
 #end iio
 
+    mount ext4 /dev/block/mmcblk0p8 /ADF rw noatime
+
+    chown system system /ADF
+    chown system system /APD
+    chmod 0775 /ADF
+    chmod 0775 /APD
+
 # Permissions for LED
     chown system system /sys/class/leds/intel_keypad_led/brightness
 
@@ -455,9 +464,27 @@ on post-fs
     chmod 0664 /sys/android_touch/register
     chmod 0664 /sys/android_touch/hitouch
     chmod 0664 /sys/android_touch/diag
+    chmod 0664 /sys/android_touch/dclick_mode
 
     chmod 0664 /sys/devices/pci0000:00/0000:00:00.4/i2c-1/1-001b/index_reg
     chmod 0664 /sys/devices/pci0000:00/0000:00:00.4/i2c-1/1-001b/codec_reg
+
+# Fix CTS permission fail
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/configarea
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/0dbutton
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/writeconfig
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/imagesize
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/rmidev/release
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/reset
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/doreflash
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/suspend
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/rmidev/open
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/full_pm_cycle
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/imagename
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/data
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/rmidev/data
+    chmod 0664 /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/readconfig
+
 
 # Permissions for Touch Palm node
     chown system system /proc/asus_touch_palm_status
@@ -471,6 +498,12 @@ on post-fs
 
     setprop persist.asus.glove 0
 
+# Permissions for Touch dclick Mode
+    chown system system /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/dclick_mode
+    chown system system /sys/android_touch/dclick_mode
+
+    setprop persist.asus.dclick 0
+
 on property:persist.asus.glove=0
     write /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/glove_mode 0
     write /sys/android_touch/glove_mode 0
@@ -478,6 +511,14 @@ on property:persist.asus.glove=0
 on property:persist.asus.glove=1
     write /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/glove_mode 1
     write /sys/android_touch/glove_mode 1
+
+on property:persist.asus.dclick=0
+    write /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/dclick_mode 0
+    write /sys/android_touch/dclick_mode 0
+
+on property:persist.asus.dclick=1
+    write /sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/dclick_mode 1
+    write /sys/android_touch/dclick_mode 1
 
 #service fg_conf /system/bin/fg_conf -w
     #group system
@@ -508,10 +549,17 @@ on property:ro.debuggable=1
    chmod 0666 /sys/devices/system/cpu/cpu1/online
    chmod 0666 /sys/devices/system/cpu/cpu3/online
    chmod 0666 /sys/module/intel_soc_pmu/parameters/s0ix
+   setprop persist.bt.debug true
 
 on property:sys.boot_completed=1
 #  Permissions for Thermal Management
     chown system system /sys/class/thermal/cooling_device2/cur_state
+
+# ASUS Product Demo
+on property:persist.sys.enableAPD=1
+    mount ext4 /dev/block/mmcblk0p7 /APD rw noatime
+    chown system system /APD
+    chmod 0775 /APD
 
 on charger
     mount_all /fstab.charger.${ro.hardware}
@@ -543,7 +591,11 @@ service simid /system/bin/sh /system/etc/simcfg.sh
     class core
     oneshot
 
-service cpmodemtlv /system/bin/sh /system/etc/mdmtlvcp.sh  ro.country_code /system/etc/firmware/modem
+service cpmodemtlv /system/bin/sh /system/etc/mdmtlvcp.sh  ro.config.versatility /system/etc/firmware/modem
     disabled
+    oneshot
+
+service info_setting /system/bin/info_setting
+    class core
     oneshot
 

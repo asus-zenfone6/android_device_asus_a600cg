@@ -45,7 +45,7 @@ on property:sys.usb.config=charging
 on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5480
+    write /sys/class/android_usb/android0/idProduct 5490
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
@@ -55,7 +55,7 @@ on property:sys.usb.config=mtp
 on property:sys.usb.config=mtp,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5481
+    write /sys/class/android_usb/android0/idProduct 5491
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 1
     write /sys/class/android_usb/android0/enable 1
@@ -66,7 +66,7 @@ on property:sys.usb.config=mtp,adb
 on property:sys.usb.config=ptp
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5484
+    write /sys/class/android_usb/android0/idProduct 5494
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/android0/enable 1
@@ -76,7 +76,7 @@ on property:sys.usb.config=ptp
 on property:sys.usb.config=ptp,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5485
+    write /sys/class/android_usb/android0/idProduct 5495
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 1
     write /sys/class/android_usb/android0/enable 1
@@ -87,7 +87,7 @@ on property:sys.usb.config=ptp,adb
 on property:sys.usb.config=rndis
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5482
+    write /sys/class/android_usb/android0/idProduct 5492
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 0
     write /sys/class/android_usb/f_rndis/wceis 1
@@ -98,7 +98,7 @@ on property:sys.usb.config=rndis
 on property:sys.usb.config=rndis,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0b05
-    write /sys/class/android_usb/android0/idProduct 5483
+    write /sys/class/android_usb/android0/idProduct 5493
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/bus/pci/devices/0000:00:02.3/sdis 1
     write /sys/class/android_usb/f_rndis/wceis 1

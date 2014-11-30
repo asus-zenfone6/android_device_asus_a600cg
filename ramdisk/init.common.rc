@@ -1,6 +1,7 @@
 import /init.watchdog.rc
 import /init.partlink.rc
 import /init.intel.features.rc
+import /init.asusreset.rc
 
 on early-init
     # set permission for charger-mode
@@ -38,11 +39,13 @@ on init
     # Support USB Disk
     #mkdir /storage/usbcard1 0700 root root
 
+#+++ MikeHsu: for factory reset with rm
+    mkdir /temp_data 0775 system system
+#--- MikeHsu: for factory reset with rm
+
     mkdir /Removable 0755 media_rw sdcard_rw
     mount tmpfs tmpfs /Removable mode=0755,gid=1000
     export SECONDARY_STORAGE /Removable/MicroSD
-    mkdir /mnt/media_rw/MicroSD 0700 media_rw media_rw
-    mkdir /Removable/MicroSD 0700 root root    
 
 on boot
     chown system system /dev/pvr_sync
@@ -89,7 +92,7 @@ on fs
     mkdir /factory 0775 system system
     mkdir /config 0775 system system
     mkdir /media 0775 media media
-    mount_all /fstab.redhookbay
+    mount_all /fstab.${ro.hardware}
     mkdir /config/wifi
     chown system wifi /config/wifi
     chmod 0770 /config/wifi
@@ -143,6 +146,8 @@ on post-fs-data
     setprop persist.thermal.display.msg 1
     setprop persist.thermal.display.vibra 1
 
+    symlink /sys/devices/pci0000:00/0000:00:01.0/emmc_total_size /data/data/emmc_total_size
+
 on charger
     chown system system /dev/dri/card0
     chmod 0666 /dev/dri/card0
@@ -177,10 +182,29 @@ service drm /system/bin/drmserver
     user drm
     group drm system inet drmrpc sdcard_r security
 
+# For log uploader by joey_lee@asus.com
+service logbackup /system/bin/sh /system/etc/packlogs.sh
+    class late_start
+    user root
+    group sdcard_rw
+    oneshot
+    disabled
+
 #Enable Houdini for execuable
 service enable_houdini /system/bin/enable_houdini
     class main
     oneshot
+
+#Enable ADB for factory test
+service enable_adb /system/bin/sh /system/bin/adbon.sh
+    class main
+    oneshot
+
+#+++ MikeHsu: for factory reset with rm
+service rmasusdir /system/bin/asusrmdir1.sh
+    class main
+    oneshot
+#--- MikeHsu: for factory reset with rm
 
 # This property trigger has added to imitiate the previous behavior of "adb root".
 # The adb gadget driver used to reset the USB bus when the adbd daemon exited,
